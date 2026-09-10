@@ -1,13 +1,3 @@
-/*
-Compilar:  gcc rsa.c -o rsa -lgmp
-Uso:
-./rsa                          -> usa mensagem padrao
-./rsa "texto qualquer"         -> cifra o texto informado
-./rsa -n 500                   -> gera e cifra uma mensagem do tamanho do n passado
-./rsa -n 500 -q                -> mesmo acima, sem imprimir cada bloco
-./rsa -n 500 -q --csv dados.csv -> mesmo acima, salvando os resultados no csv informado
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,7 +26,7 @@ void algoritmo_euclides_estendido(mpz_t d, mpz_t x, mpz_t y, const mpz_t a, cons
         mpz_fdiv_r(r, aa, bb);
 
         mpz_mul(temp, q, x1);
-        mpz_sub(xx, x2, temp); 
+        mpz_sub(xx, x2, temp);
 
         mpz_mul(temp, q, y1);
         mpz_sub(yy, y2, temp);
@@ -63,7 +53,7 @@ void potencia_modular(mpz_t result, const mpz_t base_in, const mpz_t exp_in, con
     mpz_set(exp, exp_in);
 
     while (mpz_cmp_ui(exp, 0) > 0) {
-        if (mpz_odd_p(exp)) {                  
+        if (mpz_odd_p(exp)) {
             mpz_mul(result, result, base);
             mpz_mod(result, result, mod);
         }
@@ -77,9 +67,9 @@ void potencia_modular(mpz_t result, const mpz_t base_in, const mpz_t exp_in, con
 
 void gerar_primo(mpz_t primo, gmp_randstate_t state, unsigned long bits) {
     mpz_urandomb(primo, state, bits);
-    mpz_setbit(primo, bits - 1);   
-    mpz_setbit(primo, 0);         
-    mpz_nextprime(primo, primo);   
+    mpz_setbit(primo, bits - 1);
+    mpz_setbit(primo, 0);
+    mpz_nextprime(primo, primo);
 }
 
 void gerar_chaves(mpz_t e, mpz_t d, mpz_t n, unsigned long bits_modulo, gmp_randstate_t state) {

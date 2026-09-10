@@ -1,0 +1,18 @@
+{
+    cmdlines = {
+        "xmake lua /opt/homebrew/Cellar/xmake/3.1.1/share/xmake/modules/private/utils/statistics.lua",
+        "xmake run",
+        "xmake lua /opt/homebrew/Cellar/xmake/3.1.1/share/xmake/actions/build/cleaner.lua",
+        "xmake run rsa",
+        "xmake run",
+        "xmake -v rsa",
+        "xmake -v rsa",
+        "xmake run rsa",
+        "xmake run rsa -n 500 -q",
+        "xmake run",
+        "xmake project -k makefile",
+        "xmake run",
+        "xmake run",
+        "xmake project -k compile_commands"
+    }
+}
