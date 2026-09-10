@@ -6,7 +6,7 @@
 
 ## macOS
 
-Instale as dependências do projeto:
+Instale as dependências do projeto usando o [brew](https://brew.sh/):
 
 ```
 brew install xmake gmp
