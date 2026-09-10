@@ -1,23 +1,14 @@
-/*
-Compilar:  gcc aes.c -o aes
-./aes                          -> usa mensagem padrao "This is a test..."
-./aes "texto qualquer"         -> cifra o texto informado
-./aes -n 500                   -> gera e cifra uma mensagem do tamanho do n passado
- ./aes -n 500 -q                -> mesmo acima, sem imprimir o hexadecimal completo
- ./aes -n 500 -q --csv dados.csv -> mesmo acima,salvando os resultados no csv informado
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include "common.h"
 
-#define NB 4  
-#define NK 4          
-#define NR 10        
-#define TAM_CHAVE 16 
-#define TAM_BLOCO 16 
+#define NB 4
+#define NK 4
+#define NR 10
+#define TAM_CHAVE 16
+#define TAM_BLOCO 16
 
 static const unsigned char sbox[256] = {
     0x63,0x7c,0x77,0x7b,0xf2,0x6b,0x6f,0xc5,0x30,0x01,0x67,0x2b,0xfe,0xd7,0xab,0x76,
@@ -94,11 +85,11 @@ void shift_rows(estado_t estado) {
     estado[1][1] = estado[1][2];
     estado[1][2] = estado[1][3];
     estado[1][3] = temp;
-    
+
     unsigned char t0 = estado[2][0], t1 = estado[2][1];
     estado[2][0] = estado[2][2]; estado[2][1] = estado[2][3];
     estado[2][2] = t0; estado[2][3] = t1;
-    
+
     temp = estado[3][3];
     estado[3][3] = estado[3][2];
     estado[3][2] = estado[3][1];
@@ -108,17 +99,17 @@ void shift_rows(estado_t estado) {
 
 void inv_shift_rows(estado_t estado) {
     unsigned char temp;
-    
+
     temp = estado[1][3];
     estado[1][3] = estado[1][2];
     estado[1][2] = estado[1][1];
     estado[1][1] = estado[1][0];
     estado[1][0] = temp;
-    
+
     unsigned char t0 = estado[2][0], t1 = estado[2][1];
     estado[2][0] = estado[2][2]; estado[2][1] = estado[2][3];
     estado[2][2] = t0; estado[2][3] = t1;
-    
+
     temp = estado[3][0];
     estado[3][0] = estado[3][1];
     estado[3][1] = estado[3][2];
@@ -268,7 +259,7 @@ void aes_decifrar_mensagem(const unsigned char *cifrado, size_t tamanho,
 }
 
 int main(int argc, char *argv[]) {
-    
+
     unsigned char chave[TAM_CHAVE] = {
         0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,
         0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f
@@ -296,7 +287,7 @@ int main(int argc, char *argv[]) {
             if (strcmp(argv[i], "--csv") == 0 && i + 1 < argc) arquivo_csv = argv[i + 1];
         }
     } else {
-        mensagem = "This is a test..."; 
+        mensagem = "This is a test...";
     }
 
     size_t tamanho = strlen(mensagem);
@@ -326,7 +317,7 @@ int main(int argc, char *argv[]) {
     aes_decifrar_mensagem(cifrado, tamanho_cifrado, chaves_expandidas, decifrado);
     double tempo_decifra_ms = (cronometro_agora() - t1) * 1000.0;
 
-    decifrado[tamanho] = '\0'; 
+    decifrado[tamanho] = '\0';
 
     if (!modo_silencioso)
         printf("Mensagem decifrada: \"%s\"\n", (char *)decifrado);
